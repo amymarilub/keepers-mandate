@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#F4EDE3">
+    <meta name="theme-color" content="#E8DCC8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Keeper's Mandate">
@@ -31,9 +31,8 @@
                     <span id="points-today">0</span> points · 
                     <span id="streak-display">🔥 0 days</span>
                 </div>
-            </header>
-            
-            <!-- Daily Progress Bar -->
+
+                <!-- Daily Progress Bar -->
                 <div class="daily-progress-container">
                     <div class="progress-header">
                         <span class="progress-label">Quest Progress</span>
@@ -44,7 +43,8 @@
                     </div>
                     <p class="quest-status" id="quest-status">Begin your daily mandate</p>
                 </div>
-            
+            </header>
+
             <main class="content">
                 <!-- Craft Area -->
                 <div class="task-card" data-area="craft">
@@ -55,7 +55,7 @@
                         </div>
                         <input type="checkbox" class="task-checkbox" id="craft-task">
                     </div>
-                    <div class="task-content" id="craft-content">
+                    <div class="task-content">
                         <p class="task-name">3 Focus Sessions</p>
                         <p class="task-points">+30 points</p>
                     </div>
@@ -70,7 +70,7 @@
                         </div>
                         <input type="checkbox" class="task-checkbox" id="vitality-task">
                     </div>
-                    <div class="task-content" id="vitality-content">
+                    <div class="task-content">
                         <p class="task-name">Training Run</p>
                         <p class="task-points">+15 points</p>
                     </div>
@@ -85,7 +85,7 @@
                         </div>
                         <input type="checkbox" class="task-checkbox" id="domain-task">
                     </div>
-                    <div class="task-content" id="domain-content">
+                    <div class="task-content">
                         <p class="task-name">Today's Cleaning Quest</p>
                         <p class="task-points">+25 points</p>
                     </div>
@@ -100,7 +100,7 @@
                         </div>
                         <input type="checkbox" class="task-checkbox" id="kin-task">
                     </div>
-                    <div class="task-content" id="kin-content">
+                    <div class="task-content">
                         <p class="task-name">Quality Time with Family</p>
                         <p class="task-points">+10 points</p>
                     </div>
@@ -115,19 +115,19 @@
                         </div>
                         <input type="checkbox" class="task-checkbox" id="essence-task">
                     </div>
-                    <div class="task-content" id="essence-content">
+                    <div class="task-content">
                         <p class="task-name">30 Minutes for Yourself</p>
                         <p class="task-points">+10 points</p>
                     </div>
                 </div>
 
-                <!-- Alert Card (shown when essence neglected) -->
+                <!-- Alert Card -->
                 <div class="alert-card hidden" id="essence-alert">
                     <p class="alert-text">✨ Essence neglected</p>
                     <p class="alert-wisdom">"Loyalty includes yourself."</p>
                 </div>
 
-                <!-- Edit Task Buttons -->
+                <!-- Edit Tasks Button -->
                 <button class="secondary-btn" id="edit-tasks-btn">Edit Today's Tasks</button>
             </main>
         </div>
@@ -347,3 +347,4 @@
     <script src="app.js"></script>
 </body>
 </html>
+
