@@ -1,0 +1,24 @@
+{
+  "name": "The Keeper's Mandate",
+  "short_name": "Keeper",
+  "description": "A Hufflepuff/Slytherin life management system for balanced achievement",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#F4EDE3",
+  "theme_color": "#5C5F4A",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

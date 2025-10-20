@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#F4EDE3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Keeper's Mandate">
+    
+    <title>The Keeper's Mandate</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&family=DM+Sans:wght@400;500;600&family=Spectral:ital,wght@1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <!-- Main App Container -->
+    <div id="app">
+        <!-- Today View (Default) -->
+        <div id="today-view" class="view active">
+            <header class="page-header">
+                <h1 class="title">The Keeper's Mandate</h1>
+                <p class="date" id="current-date"></p>
+                
+                <div class="stats-badge">
+                    <span id="points-today">0</span> points · 
+                    <span id="streak-display">🔥 0 days</span>
+                </div>
+            </header>
+
+            <main class="content">
+                <!-- Craft Area -->
+                <div class="task-card" data-area="craft">
+                    <div class="task-header">
+                        <div class="area-info">
+                            <span class="area-icon">📜</span>
+                            <span class="area-label">CRAFT</span>
+                        </div>
+                        <input type="checkbox" class="task-checkbox" id="craft-task">
+                    </div>
+                    <div class="task-content" id="craft-content">
+                        <p class="task-name">3 Focus Sessions</p>
+                        <p class="task-points">+30 points</p>
+                    </div>
+                </div>
+
+                <!-- Vitality Area -->
+                <div class="task-card" data-area="vitality">
+                    <div class="task-header">
+                        <div class="area-info">
+                            <span class="area-icon">⚡</span>
+                            <span class="area-label">VITALITY</span>
+                        </div>
+                        <input type="checkbox" class="task-checkbox" id="vitality-task">
+                    </div>
+                    <div class="task-content" id="vitality-content">
+                        <p class="task-name">Training Run</p>
+                        <p class="task-points">+15 points</p>
+                    </div>
+                </div>
+
+                <!-- Domain Area -->
+                <div class="task-card" data-area="domain">
+                    <div class="task-header">
+                        <div class="area-info">
+                            <span class="area-icon">🏰</span>
+                            <span class="area-label">DOMAIN</span>
+                        </div>
+                        <input type="checkbox" class="task-checkbox" id="domain-task">
+                    </div>
+                    <div class="task-content" id="domain-content">
+                        <p class="task-name">Today's Cleaning Quest</p>
+                        <p class="task-points">+25 points</p>
+                    </div>
+                </div>
+
+                <!-- Kin Area -->
+                <div class="task-card" data-area="kin">
+                    <div class="task-header">
+                        <div class="area-info">
+                            <span class="area-icon">💛</span>
+                            <span class="area-label">KIN</span>
+                        </div>
+                        <input type="checkbox" class="task-checkbox" id="kin-task">
+                    </div>
+                    <div class="task-content" id="kin-content">
+                        <p class="task-name">Quality Time with Family</p>
+                        <p class="task-points">+10 points</p>
+                    </div>
+                </div>
+
+                <!-- Essence Area -->
+                <div class="task-card" data-area="essence">
+                    <div class="task-header">
+                        <div class="area-info">
+                            <span class="area-icon">✨</span>
+                            <span class="area-label">ESSENCE</span>
+                        </div>
+                        <input type="checkbox" class="task-checkbox" id="essence-task">
+                    </div>
+                    <div class="task-content" id="essence-content">
+                        <p class="task-name">30 Minutes for Yourself</p>
+                        <p class="task-points">+10 points</p>
+                    </div>
+                </div>
+
+                <!-- Alert Card (shown when essence neglected) -->
+                <div class="alert-card hidden" id="essence-alert">
+                    <p class="alert-text">✨ Essence neglected</p>
+                    <p class="alert-wisdom">"Loyalty includes yourself."</p>
+                </div>
+
+                <!-- Edit Task Buttons -->
+                <button class="secondary-btn" id="edit-tasks-btn">Edit Today's Tasks</button>
+            </main>
+        </div>
+
+        <!-- Timer View -->
+        <div id="timer-view" class="view">
+            <header class="page-header">
+                <h1 class="title-small">Focus Charm</h1>
+            </header>
+
+            <main class="content timer-content">
+                <div class="timer-card">
+                    <div class="timer-display">
+                        <span id="timer-minutes">25</span>:<span id="timer-seconds">00</span>
+                    </div>
+                    
+                    <svg class="progress-ring" width="200" height="200">
+                        <circle class="progress-ring-bg" cx="100" cy="100" r="90"></circle>
+                        <circle class="progress-ring-fill" cx="100" cy="100" r="90" id="progress-circle"></circle>
+                    </svg>
+
+                    <div class="timer-area">
+                        <p class="timer-label">Focused on:</p>
+                        <div class="timer-area-badge" id="timer-area-display">
+                            <span class="area-icon">📜</span>
+                            <span>CRAFT</span>
+                        </div>
+                    </div>
+
+                    <div class="session-dots" id="session-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+                    <div class="timer-controls">
+                        <button class="primary-btn" id="timer-start">Start</button>
+                        <button class="secondary-btn hidden" id="timer-pause">Pause</button>
+                        <button class="secondary-btn hidden" id="timer-stop">Stop</button>
+                    </div>
+                </div>
+
+                <div class="wisdom-card">
+                    <p class="wisdom-text">"Deep work is a form of magic"</p>
+                </div>
+            </main>
+        </div>
+
+        <!-- Stats View -->
+        <div id="stats-view" class="view">
+            <header class="page-header">
+                <h1 class="title-small">Your Ledger</h1>
+                <p class="ledger-subtitle">This record is yours alone</p>
+            </header>
+
+            <main class="content">
+                <div class="stat-card streak-card">
+                    <p class="stat-label">🔥 Current Streak</p>
+                    <p class="stat-value" id="stat-streak">0 days</p>
+                    <p class="stat-sublabel">Longest: <span id="stat-longest">0</span> days</p>
+                </div>
+
+                <div class="stat-card">
+                    <p class="stat-label">This Week</p>
+                    <p class="stat-value" id="stat-week-points">0 points</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="week-progress" style="width: 0%"></div>
+                    </div>
+                    <p class="stat-sublabel">Goal: 600 points</p>
+                </div>
+
+                <h3 class="section-title">Mastery Levels</h3>
+
+                <div class="mastery-card">
+                    <div class="mastery-header">
+                        <span>📜 CRAFT</span>
+                        <span class="mastery-level" id="craft-level">⭐⭐⭐⭐</span>
+                    </div>
+                    <div class="mastery-dots" id="craft-dots">
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <p class="mastery-text"><span id="craft-count">4</span>/7 days this week</p>
+                </div>
+
+                <div class="mastery-card">
+                    <div class="mastery-header">
+                        <span>⚡ VITALITY</span>
+                        <span class="mastery-level" id="vitality-level">⭐⭐⭐</span>
+                    </div>
+                    <div class="mastery-dots" id="vitality-dots">
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <p class="mastery-text"><span id="vitality-count">3</span>/7 days this week</p>
+                </div>
+
+                <div class="mastery-card">
+                    <div class="mastery-header">
+                        <span>🏰 DOMAIN</span>
+                        <span class="mastery-level" id="domain-level">⭐⭐⭐⭐</span>
+                    </div>
+                    <div class="mastery-dots" id="domain-dots">
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <p class="mastery-text"><span id="domain-count">4</span>/7 days this week</p>
+                </div>
+
+                <div class="mastery-card">
+                    <div class="mastery-header">
+                        <span>💛 KIN</span>
+                        <span class="mastery-level" id="kin-level">⭐⭐⭐</span>
+                    </div>
+                    <div class="mastery-dots" id="kin-dots">
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <p class="mastery-text"><span id="kin-count">3</span>/7 days this week</p>
+                </div>
+
+                <div class="mastery-card warning">
+                    <div class="mastery-header">
+                        <span>✨ ESSENCE</span>
+                        <span class="mastery-level" id="essence-level">⭐⭐</span>
+                    </div>
+                    <div class="mastery-dots" id="essence-dots">
+                        <span class="dot filled"></span>
+                        <span class="dot filled"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <p class="mastery-text"><span id="essence-count">2</span>/7 days this week</p>
+                </div>
+
+                <div class="alert-card" id="stats-insight">
+                    <p class="alert-text">⚠️ Essence neglected</p>
+                    <p class="alert-wisdom">"You work hard for others but not for yourself. Strategic? No. Sustainable? No."</p>
+                </div>
+            </main>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-view="today">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                </svg>
+                <span class="nav-label">Today</span>
+            </button>
+            
+            <button class="nav-item" data-view="stats">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 20V10M12 20V4M6 20v-6"></path>
+                </svg>
+                <span class="nav-label">Stats</span>
+            </button>
+            
+            <button class="nav-item" data-view="timer">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                </svg>
+                <span class="nav-label">Timer</span>
+            </button>
+            
+            <button class="nav-item" id="more-btn">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="12" cy="5" r="1"></circle>
+                    <circle cx="12" cy="19" r="1"></circle>
+                </svg>
+                <span class="nav-label">More</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Achievement Modal -->
+    <div id="achievement-modal" class="modal hidden">
+        <div class="modal-content achievement-content">
+            <div class="achievement-icon" id="achievement-icon">✨</div>
+            <h2 class="achievement-title" id="achievement-title">Balance Achieved</h2>
+            <p class="achievement-text" id="achievement-text">You showed up for every part of your life today.</p>
+            <button class="primary-btn" id="close-achievement">Continue</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
