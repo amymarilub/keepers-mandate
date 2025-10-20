@@ -314,7 +314,7 @@ function startTimer() {
     document.getElementById('timer-stop').classList.remove('hidden');
     
     const totalSeconds = 25 * 60;
-    const circumference = 2 * Math.PI * 90;
+    const circumference = 2 * Math.PI * 80; // Updated radius
     const circle = document.getElementById('progress-circle');
     circle.style.strokeDasharray = circumference;
     
@@ -489,3 +489,4 @@ function getDayOfWeek() {
 
 // Check for new day every minute
 setInterval(checkForNewDay, 60000);
+
