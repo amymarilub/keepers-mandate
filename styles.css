@@ -360,44 +360,40 @@ body {
 .timer-card {
     background: var(--color-white);
     border-radius: var(--radius-card);
-    padding: 40px 32px;
+    padding: var(--space-xl) var(--space-lg);
     box-shadow: var(--shadow-medium);
     width: 100%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
 }
 
 .timer-display {
     font-family: var(--font-header);
-    font-size: 64px;
+    font-size: 48px;
     font-weight: 600;
     color: var(--color-warm-black);
-    letter-spacing: -2px;
+    letter-spacing: -1px;
     text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
+    margin-bottom: var(--space-md);
 }
 
 .progress-ring {
-    margin-bottom: var(--space-lg);
+    position: relative;
+    margin-bottom: var(--space-md);
 }
 
 .progress-ring-bg {
     fill: none;
     stroke: var(--color-canvas);
-    stroke-width: 8;
+    stroke-width: 6;
 }
 
 .progress-ring-fill {
     fill: none;
     stroke: var(--color-olive);
-    stroke-width: 8;
+    stroke-width: 6;
     stroke-linecap: round;
     transition: stroke-dashoffset 1s linear;
     transform: rotate(-90deg);
@@ -407,52 +403,62 @@ body {
 .timer-area {
     text-align: center;
     margin-bottom: var(--space-md);
+    margin-top: var(--space-md);
 }
 
 .timer-label {
     font-size: 12px;
     color: var(--color-stone);
     margin-bottom: var(--space-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .timer-area-badge {
-    background: rgba(92, 95, 74, 0.06);
+    background: rgba(92, 95, 74, 0.08);
+    border: 1px solid rgba(92, 95, 74, 0.15);
     border-radius: var(--radius-button);
-    padding: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
     display: inline-flex;
     align-items: center;
     gap: var(--space-xs);
     font-size: 14px;
     font-weight: 500;
+    color: var(--color-olive);
 }
 
 .session-dots {
     display: flex;
-    gap: var(--space-xxs);
+    gap: var(--space-xs);
     margin-bottom: var(--space-lg);
 }
 
 .session-dots .dot {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: var(--color-canvas);
+    transition: all 0.2s ease;
 }
 
 .session-dots .dot.filled {
     background: var(--color-olive);
+    box-shadow: 0 0 4px rgba(92, 95, 74, 0.3);
 }
 
 .timer-controls {
     display: flex;
-    gap: var(--space-xs);
+    gap: var(--space-sm);
     width: 100%;
+    margin-top: var(--space-md);
 }
 
 .timer-controls .primary-btn,
 .timer-controls .secondary-btn {
     flex: 1;
     margin-top: 0;
+    min-height: 44px;
+    font-size: 15px;
 }
 
 .wisdom-card {
