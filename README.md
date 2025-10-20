@@ -1,181 +1,357 @@
-[README.md](https://github.com/user-attachments/files/22993480/README.md)
-# 🦡🐍 The Keeper's Mandate
+# 🦡🐍 The Keeper's Mandate v3 - Dark Cozy Edition
 
-Your personal Hufflepuff/Slytherin life management system.
+## 🕯️ Hufflepuff Common Room Aesthetic
 
----
-
-## 📱 How to Install on Your Phone
-
-### iPhone:
-1. Open `index.html` in Safari
-2. Tap the Share button (box with arrow)
-3. Scroll down and tap "Add to Home Screen"
-4. Tap "Add" in the top right
-5. The app icon will appear on your home screen!
-
-### Android:
-1. Open `index.html` in Chrome
-2. Tap the three dots menu (⋮)
-3. Tap "Add to Home Screen"
-4. Tap "Add"
-5. The app icon will appear on your home screen!
+**Like working by candlelight in your cozy underground study** 🌿📚✨
 
 ---
 
-## 🎯 How to Use
+## ✨ What's New in V3:
 
-### The 5 Life Areas:
+### 1. 🌙 Dark Cozy Mode
+**Inspired by Hufflepuff Common Room in Hogwarts Legacy**
 
-Every day, complete ONE task from each area to WIN the day:
+- **Warm dark browns** (#1A1612) - like rich wood
+- **Amber glows** (#D4A855) - like candlelight
+- **Muted sage greens** (#5A6B4F) - plants in shadow
+- **Cream parchment text** (#F5EFE0) - readable & warm
+- **Glowing interactive elements** - magical feel
+- **Warm shadows** - not cold blue-black
+- **Layered lighting effects** - multiple soft glows
 
-1. **📜 CRAFT** - Your work (content, designs, focus sessions)
-2. **⚡ VITALITY** - Training & physical health (runs, workouts)
-3. **🏰 DOMAIN** - Managing your household (cleaning, organizing)
-4. **💛 KIN** - Family time (quality time, school activities)
-5. **✨ ESSENCE** - YOUR time (reading, crocheting, creativity)
+### 2. 📚 Better Typography
+**Hufflepuff-Inspired Font Pairing**
+
+- **Merriweather** (headers) - Warm, traditional, like old books
+- **Nunito** (body) - Rounded, inviting, highly readable
+- Feels like reading by firelight in the common room!
+
+### 3. 📊 Week View (NEW!)
+**Atoms-Inspired Pattern Tracking**
+
+- See all 5 areas across 7 days
+- Grid shows Mon-Sun at a glance
+- Checkmarks for completed days
+- Today highlighted with amber glow
+- Automatic insights ("Craft is your strongest")
+- Spot patterns instantly!
+
+### 4. ✅ Bigger Checkboxes
+**32px Instead of 24px**
+
+- More satisfying to click
+- Better mobile experience
+- Glow when you hover
+- Glowing animation when checked
+- Feels magical!
+
+### 5. 🌟 Glowing Everything
+**Candlelight Effect Throughout**
+
+- Progress bars glow amber
+- Checkboxes glow on complete
+- Buttons glow on hover
+- Timer ring glows
+- Session dots glow
+- Stats cards glow
+- Like casting spells!
 
 ---
 
-## 📅 Daily Workflow
+## 🎨 The Aesthetic:
+
+### Colors:
+```
+Backgrounds:
+- Primary: #1A1612 (deep warm brown)
+- Cards: #2A2320 (lighter brown)
+- Elevated: #3A342E (hover states)
+
+Accents:
+- Glow: #D4A855 (amber candlelight)
+- Gold: #C9A65C (warmer gold)
+- Green: #5A6B4F (muted sage)
+- Moss: #6B8A5F (success states)
+
+Text:
+- Primary: #F5EFE0 (cream parchment)
+- Secondary: #C4B8A8 (dimmer cream)
+- Muted: #8A7F72 (very dim)
+```
+
+### Vibes:
+- 🕯️ Candlelit underground study
+- 📚 Old books and leather
+- 🌿 Living plants in corners
+- 🪵 Rich dark wood tones
+- ✨ Soft magical glows
+- 🏡 Cozy and safe
+- 🦡 Warm Hufflepuff energy
+
+---
+
+## 📱 All Features:
+
+### Core:
+✅ 5 daily areas (Craft, Vitality, Domain, Kin, Essence)  
+✅ Daily quest progress bar (X/5 with glow)  
+✅ Bigger 32px checkboxes with glow  
+✅ Edit tasks (working modal)  
+✅ Points & streak tracking  
+✅ "Won the day" celebration  
+
+### NEW Week View:
+✅ 5×7 grid (all areas × all days)  
+✅ See completion patterns  
+✅ Today highlighted  
+✅ Automatic insights  
+✅ Spot neglected areas  
+✅ Track consistency  
+
+### Timer:
+✅ 25-min focus sessions  
+✅ Glowing progress ring  
+✅ Area selection dropdown  
+✅ 6 sessions/day tracking  
+✅ Completion celebrations  
+
+### Stats:
+✅ Current streak  
+✅ Week points tracking  
+✅ Mastery levels (stars)  
+✅ 7-day completion dots  
+✅ Insights on neglected areas  
+
+### More Menu:
+✅ About page  
+✅ House philosophy  
+✅ Export data (JSON)  
+✅ Reset option  
+
+---
+
+## 🎯 What Makes This Special:
+
+### Dark But Warm
+- Not cold blue-black
+- Brown undertones everywhere
+- Amber glows, not blue
+- Like a real common room
+
+### Glowing Magic
+- Everything interactive glows
+- Amber candlelight effect
+- Feels like casting spells
+- Satisfying feedback
+
+### Pattern Tracking
+- Week grid shows trends
+- Spot your strongest area
+- See what needs attention
+- Build better habits
+
+### Cozy Underground Study
+- Safe tucked-away feel
+- Perfect for deep work
+- No harsh lights
+- Easy on eyes at night
+
+---
+
+## 📦 Files:
+
+1. **index.html** (18KB) - Structure with week view
+2. **styles.css** (28KB) - Dark cozy aesthetic
+3. **app.js** (26KB) - All features + week view
+4. **manifest.json** - PWA config
+
+**Total: 72KB** - Still tiny!
+
+---
+
+## 🚀 How to Deploy:
+
+### GitHub Pages:
+1. Create repository
+2. Upload these 4 files
+3. Enable Pages in Settings
+4. Get your URL
+5. Open on phone
+6. Install to home screen
+
+### Netlify:
+1. Go to netlify.com
+2. Drag the v3-dark folder
+3. Get instant URL
+4. Done!
+
+---
+
+## 🌟 The Experience:
 
 ### Morning:
-1. Open the app
-2. See today's mandate (5 tasks, one per area)
-3. Tap "Edit Today's Tasks" if you want to change any
-4. Start your day!
+Open app → See amber glow → Feel cozy → Check today's mandate → Start first task
 
-### Throughout the Day:
-- Tap checkboxes as you complete tasks
-- Use the Focus Timer for work sessions
-- Watch your points add up
+### During Day:
+Complete task → Checkbox glows green → Progress bar fills → "X quests remaining..."
 
 ### Evening:
-- Complete all 5 areas = WIN the day! 🎉
-- Build your streak
-- See your progress in Stats
+Final task → Progress bar full → "⚡ You've won the day! ⚡" → Both houses proud
+
+### Weekly Review:
+Check Week tab → See patterns → "Craft is strongest" → "Essence needs attention" → Adjust
 
 ---
 
-## ⏱️ Focus Timer
+## 🦡 Hufflepuff Common Room Elements:
 
-1. Tap "Timer" in bottom nav
-2. Tap "Start" to begin 25-minute focus session
-3. Work distraction-free
-4. Complete 6 sessions = full work day!
+### What We Captured:
+✅ Warm glowing lights (amber #D4A855)  
+✅ Dark wood tones (brown #1A1612)  
+✅ Cozy underground feel (safe aesthetic)  
+✅ Plants in shadows (🌿 green accents)  
+✅ Circular organic shapes (rounded corners)  
+✅ Layered soft lighting (multiple glows)  
+✅ Natural textures (grain, depth)  
+✅ Comfortable scholarly vibe (books, study)  
 
----
+### The Vibe:
+Like settling into a comfortable armchair by the fire in the common room, opening your personal journal, and tracking your progress by candlelight while plants grow quietly in the corners and the smell of earth and old books surrounds you.
 
-## 📊 Stats View
-
-Track:
-- Your current streak 🔥
-- Longest streak
-- Weekly points
-- Mastery level for each area
-- Warnings if you're neglecting any area (especially Essence!)
-
----
-
-## 🏆 Achievements
-
-### Hidden Achievements:
-- **7 Days:** One week of consistency
-- **30 Days: "ALWAYS"** - Snape's dedication 🖤
-- **90 Days: "THE UNBREAKABLE VOW"** - True mastery
-- **Balance:** Complete all 5 areas in one day
+**Cozy. Safe. Productive. Magical.**
 
 ---
 
-## 🎨 The Philosophy
+## 🎯 Perfect For:
 
-This isn't about productivity porn or social media validation.
-
-This is about:
-- Doing the work no one sees
-- Loyalty to yourself
-- Strategic, quiet dedication
-- The long game
-- "Always"
-
-**Snape kept his promise to Lily for decades.**  
-**You're learning to keep your promise to yourself.**
+- Late night planning
+- Early morning focus
+- ADHD-friendly (clear, structured)
+- Dark mode lovers
+- Hufflepuffs (obviously)
+- Slytherins (strategic tracking)
+- Anyone who loves cozy aesthetics
+- People who work best in dim lighting
+- Those who track with intention
 
 ---
 
-## 💾 Your Data
+## 💪 Technical Highlights:
 
-- Everything saves automatically to your device
-- Data is private - stored locally, not in the cloud
-- No tracking, no social sharing
-- This is YOUR ledger
+### Performance:
+- 72KB total (incredibly light)
+- Instant load times
+- Works offline (PWA)
+- Saves to localStorage
+- No external dependencies
 
----
+### Design:
+- Mobile-first responsive
+- Glowing CSS animations
+- Warm color psychology
+- Accessible font sizes
+- Touch-friendly targets
 
-## 🔧 Technical Details
-
-### What You Have:
-- Progressive Web App (PWA)
-- Works offline once installed
-- Mobile-first design
-- Muted Hufflepuff/Slytherin aesthetic
-- 10px border radius (no harsh corners!)
-- Local storage for data
-
-### Files:
-- `index.html` - Main app structure
-- `styles.css` - All the beautiful styling
-- `app.js` - App functionality
-- `manifest.json` - PWA configuration
+### UX:
+- One-tap task completion
+- Instant visual feedback
+- Pattern recognition
+- Satisfying interactions
+- No friction
 
 ---
 
-## 🎯 Pro Tips
+## 🏆 Achievements You'll Unlock:
 
-1. **Edit tasks daily** - Customize based on your actual day
-2. **Be realistic** - Low energy? Make tasks smaller
-3. **Essence matters** - Don't neglect yourself
-4. **Streaks are powerful** - They show you who you're becoming
-5. **No guilt** - Lost a day? Start again tomorrow
-
----
-
-## 🦡 Hufflepuff Reminder:
-
-"The most powerful magic is showing up.  
-Not perfectly. Not loudly.  
-Just... showing up."
-
-## 🐍 Slytherin Reminder:
-
-"Work smarter AND harder.  
-Strategic loyalty.  
-Sustainable ambition.  
-That's your power."
+- **Balance Achieved**: Complete all 5 areas
+- **7 Days Strong**: One week streak
+- **Always (30 days)**: "After all this time?" 🖤
+- **Unbreakable Vow (90 days)**: True mastery
+- **Focus Charm Complete**: Finish timer session
+- **Won the Day**: All 5 complete with celebration
 
 ---
 
-## 🖤 "Always"
+## 📝 How to Use:
 
-This app honors the quiet, relentless work that no one sees.
+### Daily:
+1. Open app (glowing interface greets you)
+2. Review 5 areas
+3. Check off as you complete
+4. Watch progress bar fill
+5. Celebrate when done
 
-The work you do for yourself, with no applause, because you promised you would.
+### Weekly:
+1. Tap "Week" tab
+2. See 5×7 grid
+3. Notice patterns
+4. Read insights
+5. Adjust approach
 
-That's the deepest magic.
+### Focus Sessions:
+1. Tap "Timer" tab
+2. Select area
+3. Hit Start
+4. Watch ring glow
+5. Complete 25 min
+6. Get +10 points
 
 ---
 
-**Both houses are proud.** 🦡🐍⚡
+## ✨ The Philosophy:
+
+**From v1:** Strategic loyalty. Showing up. Consistency over perfection.
+
+**Now in v3:** *Practiced in the warm glow of your underground study.*
+
+The aesthetic matches the mission:
+- Cozy = Sustainable
+- Warm = Compassionate to yourself
+- Glowing = Progress is magical
+- Dark = Works anytime
+- Patterns = Strategic tracking
+
+**You're not grinding. You're tending a garden by candlelight.** 🌿🕯️
 
 ---
 
-## Next Steps
+## 🦡🐍 Both Houses Approve:
 
-1. Upload these files to a web server (or use GitHub Pages)
-2. Open in your phone's browser
-3. Install to home screen
-4. Start your first day
-5. Show up tomorrow
-6. Keep your promise
+**Hufflepuff says:** "The cozy aesthetic honors loyalty and dedication. This feels like home."
 
-You've got this. ✨
+**Slytherin says:** "The week view and pattern tracking? Strategic brilliance. Results visible at a glance."
+
+**Together:** "Strategic loyalty in the most beautiful form." 🖤
+
+---
+
+## 🎉 You're Ready!
+
+This version has EVERYTHING:
+
+✅ Dark Hufflepuff common room aesthetic  
+✅ Warm glowing amber candlelight  
+✅ Better typography (Merriweather + Nunito)  
+✅ Week view for pattern tracking  
+✅ Bigger checkboxes (32px)  
+✅ Glowing interactive elements  
+✅ All v2 features working  
+✅ Mobile-optimized  
+✅ PWA installable  
+✅ Ready to deploy NOW  
+
+---
+
+**Upload it. Install it. Use it by candlelight.** 🕯️
+
+**Win your days in the cozy warmth of your magical study.** 🦡🐍✨
+
+---
+
+*"After all this time?"*
+
+*"Always." 🖤*
+
+---
+
+**P.S.** This is the version you keep. The aesthetic is perfect, the features work, the vibe is immaculate. This is your daily companion.
