@@ -51,7 +51,18 @@ function initializeApp() {
     
     // Setup edit tasks
     setupEditTasksUI(); // ADD THIS LINE
+
+    // Setup more menu
+    setupMoreMenu();
 }
+
+// Timer area selection
+    const areaSelect = document.getElementById('timer-area-select');
+    if (areaSelect) {
+        areaSelect.addEventListener('change', (e) => {
+            appState.timerState.currentArea = e.target.value;
+        });
+    }
 
 // ============================================
 // Event Listeners
@@ -162,14 +173,38 @@ function updateTodayStats() {
         .filter(task => task.completed)
         .reduce((sum, task) => sum + task.points, 0);
     
+    const completedCount = getTotalCompleted();
+    
     document.getElementById('points-today').textContent = totalPoints;
     document.getElementById('streak-display').textContent = `🔥 ${appState.streak} days`;
+    
+    // Update progress bar
+    const progressFill = document.getElementById('quest-progress-fill');
+    const progressCount = document.getElementById('progress-count');
+    const questStatus = document.getElementById('quest-status');
+    
+    if (progressFill && progressCount && questStatus) {
+        const percentage = (completedCount / 5) * 100;
+        progressFill.style.width = `${percentage}%`;
+        progressCount.textContent = `${completedCount}/5`;
+        
+        if (completedCount === 0) {
+            questStatus.textContent = "Begin your daily mandate";
+            questStatus.classList.remove('winner');
+        } else if (completedCount < 5) {
+            questStatus.textContent = `${5 - completedCount} quest${5 - completedCount > 1 ? 's' : ''} remaining...`;
+            questStatus.classList.remove('winner');
+        } else {
+            questStatus.textContent = "⚡ You've won the day! All areas complete! ⚡";
+            questStatus.classList.add('winner');
+        }
+    }
     
     // Check if essence is neglected
     const essenceCompleted = appState.tasks.essence.completed;
     const essenceAlert = document.getElementById('essence-alert');
     
-    if (!essenceCompleted && getTotalCompleted() >= 3) {
+    if (!essenceCompleted && completedCount >= 3) {
         essenceAlert.classList.remove('hidden');
     } else {
         essenceAlert.classList.add('hidden');
@@ -471,6 +506,122 @@ function updateSessionDots() {
 }
 
 // ============================================
+// More Menu
+// ============================================
+
+function setupMoreMenu() {
+    const moreBtn = document.getElementById('more-btn');
+    if (moreBtn) {
+        moreBtn.addEventListener('click', showMoreMenu);
+    }
+}
+
+function showMoreMenu() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content more-menu">
+            <h2 class="modal-title">Settings & Info</h2>
+            
+            <div class="menu-item" onclick="showAboutModal()">
+                <span>ℹ️ About The Keeper's Mandate</span>
+            </div>
+            
+            <div class="menu-item" onclick="resetData()">
+                <span>🔄 Reset All Data</span>
+            </div>
+            
+            <div class="menu-item" onclick="exportData()">
+                <span>💾 Export Data</span>
+            </div>
+            
+            <div class="menu-item" onclick="showHousesInfo()">
+                <span>🦡🐍 House Philosophy</span>
+            </div>
+            
+            <button class="primary-btn" onclick="this.closest('.modal').remove()" style="margin-top: 20px;">Close</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function showAboutModal() {
+    document.querySelector('.modal').remove();
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h2 class="modal-title">The Keeper's Mandate</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6;">
+                A Hufflepuff/Slytherin life management system for balanced achievement.
+            </p>
+            <p style="margin-bottom: 16px; line-height: 1.6; font-style: italic; color: var(--color-stone);">
+                "The most powerful magic is showing up. Not perfectly. Not loudly. Just... showing up."
+            </p>
+            <p style="line-height: 1.6; color: var(--color-stone); font-size: 14px;">
+                This app honors Snape's dedication: doing the work no one sees, keeping promises to yourself, always.
+            </p>
+            <button class="primary-btn" onclick="this.closest('.modal').remove()" style="margin-top: 20px;">Close</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function showHousesInfo() {
+    document.querySelector('.modal').remove();
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h2 class="modal-title">🦡🐍 Your Houses</h2>
+            
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: var(--color-gold); margin-bottom: 8px;">🦡 Hufflepuff</h3>
+                <p style="line-height: 1.6; color: var(--color-charcoal); font-size: 14px;">
+                    Loyalty. Dedication. Showing up every single day. Consistency is your power.
+                </p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: var(--color-olive); margin-bottom: 8px;">🐍 Slytherin</h3>
+                <p style="line-height: 1.6; color: var(--color-charcoal); font-size: 14px;">
+                    Ambition. Strategy. Achieving your goals efficiently. Results matter.
+                </p>
+            </div>
+            
+            <p style="line-height: 1.6; color: var(--color-stone); font-size: 13px; font-style: italic;">
+                Together: Strategic loyalty. Sustainable ambition. The long game.
+            </p>
+            
+            <button class="primary-btn" onclick="this.closest('.modal').remove()" style="margin-top: 20px;">Close</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function resetData() {
+    if (confirm('Are you sure? This will delete all your data and cannot be undone.')) {
+        localStorage.clear();
+        location.reload();
+    }
+}
+
+function exportData() {
+    const dataStr = JSON.stringify(appState, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `keeper-data-${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+}
+
+// ============================================
 // Achievements
 // ============================================
 
@@ -502,7 +653,7 @@ function showAchievement(type, title, text) {
     
     // Set icon based on type
     const icons = {
-        balance: '✨',
+        balance: '🦡🐍',
         always: '🖤',
         unbreakable: '🖤',
         week: '🔥',
