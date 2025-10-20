@@ -1,5 +1,6 @@
 /* ============================================
    The Keeper's Mandate - Design System
+   Moodier Hufflepuff/Slytherin Aesthetic
    ============================================ */
 
 /* CSS Variables */
@@ -76,7 +77,7 @@ body {
 
 #app {
     min-height: 100vh;
-    padding-bottom: 80px; /* Space for bottom nav */
+    padding-bottom: 80px;
 }
 
 .view {
@@ -144,7 +145,7 @@ body {
 }
 
 .stats-badge {
-    background: rgba(92, 95, 74, 0.08);
+    background: rgba(74, 77, 58, 0.12);
     border-radius: var(--radius-card);
     padding: var(--space-sm);
     font-size: 14px;
@@ -152,53 +153,92 @@ body {
     display: inline-block;
 }
 
-/* Daily Progress Bar */
+.ledger-subtitle {
+    font-size: 13px;
+    color: var(--color-stone);
+    font-style: italic;
+    margin-top: var(--space-xxs);
+}
+
+/* ============================================
+   Daily Progress Bar (Quest Progress)
+   ============================================ */
+
 .daily-progress-container {
-    background: linear-gradient(135deg, rgba(74, 77, 58, 0.08) 0%, rgba(184, 147, 92, 0.08) 100%);
-    border: 1px solid rgba(74, 77, 58, 0.2);
+    background: linear-gradient(135deg, rgba(74, 77, 58, 0.10) 0%, rgba(184, 147, 92, 0.10) 100%);
+    border: 1.5px solid rgba(74, 77, 58, 0.25);
     border-radius: var(--radius-card);
-    padding: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
     margin-top: var(--space-md);
+    margin-bottom: var(--space-lg);
+    box-shadow: inset 0 1px 3px rgba(44, 37, 32, 0.08);
 }
 
 .progress-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--space-xs);
+    margin-bottom: var(--space-sm);
 }
 
 .progress-label {
     font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--color-olive);
 }
 
 .progress-count {
     font-family: var(--font-header);
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     color: var(--color-gold);
+    letter-spacing: -0.5px;
 }
 
 .quest-progress-bar {
-    background: rgba(44, 37, 32, 0.15);
-    height: 12px;
+    background: rgba(44, 37, 32, 0.20);
+    height: 10px;
     border-radius: var(--radius-small);
     overflow: hidden;
-    margin-bottom: var(--space-xs);
+    margin-bottom: var(--space-sm);
+    border: 1px solid rgba(44, 37, 32, 0.10);
 }
 
 .quest-progress-fill {
     background: linear-gradient(90deg, var(--color-olive) 0%, var(--color-gold) 100%);
     height: 100%;
     border-radius: var(--radius-small);
-    transition: width 0.5s ease;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     width: 0%;
-    box-shadow: 0 0 8px rgba(184, 147, 92, 0.3);
+    box-shadow: 0 0 12px rgba(184, 147, 92, 0.4);
+    position: relative;
+}
+
+.quest-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        transparent 100%
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 .quest-status {
@@ -207,24 +247,25 @@ body {
     font-size: 13px;
     color: var(--color-stone);
     text-align: center;
+    transition: all 0.3s ease;
 }
 
 .quest-status.winner {
     color: var(--color-gold);
     font-weight: 500;
-    animation: shimmer 2s ease infinite;
+    font-size: 14px;
+    animation: pulse 2s ease infinite;
 }
 
-@keyframes shimmer {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-.ledger-subtitle {
-    font-size: 13px;
-    color: var(--color-stone);
-    font-style: italic;
-    margin-top: var(--space-xxs);
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.85;
+        transform: scale(1.02);
+    }
 }
 
 /* ============================================
@@ -241,7 +282,7 @@ body {
 
 .task-card {
     background: var(--color-white);
-    border: 1px solid rgba(92, 95, 74, 0.12);
+    border: 1px solid rgba(74, 77, 58, 0.15);
     border-radius: var(--radius-card);
     padding: 20px;
     margin-bottom: var(--space-sm);
@@ -250,8 +291,14 @@ body {
     position: relative;
 }
 
+.task-card:hover {
+    box-shadow: var(--shadow-medium);
+    border-color: rgba(74, 77, 58, 0.25);
+}
+
 .task-card.completed {
-    opacity: 0.5;
+    opacity: 0.6;
+    background: rgba(232, 220, 200, 0.3);
 }
 
 .task-card.completed .task-name {
@@ -277,14 +324,14 @@ body {
 
 .area-label {
     font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
     color: var(--color-olive);
 }
 
 .task-content {
-    margin-left: 28px; /* Align with text after icon */
+    margin-left: 28px;
 }
 
 .task-name {
@@ -292,6 +339,7 @@ body {
     font-size: 16px;
     color: var(--color-warm-black);
     margin-bottom: var(--space-xxs);
+    font-weight: 500;
 }
 
 .task-points {
@@ -321,6 +369,10 @@ body {
     flex-shrink: 0;
 }
 
+.task-checkbox:hover {
+    border-color: var(--color-olive);
+}
+
 .task-checkbox:checked {
     background: var(--color-success);
     border-color: var(--color-success);
@@ -337,12 +389,25 @@ body {
     font-weight: bold;
 }
 
+@keyframes checkGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(93, 122, 80, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 0 8px rgba(93, 122, 80, 0);
+    }
+}
+
+.task-checkbox:checked {
+    animation: checkGlow 0.4s ease;
+}
+
 /* ============================================
    Alert Cards
    ============================================ */
 
 .alert-card {
-    background: rgba(168, 95, 79, 0.05);
+    background: rgba(154, 88, 71, 0.08);
     border-left: 3px solid var(--color-alert);
     border-radius: var(--radius-card);
     padding: var(--space-md);
@@ -387,8 +452,13 @@ body {
 }
 
 .primary-btn:hover {
-    background: #4A4D3C;
-    box-shadow: 0 4px 12px rgba(92, 95, 74, 0.2);
+    background: var(--color-forest);
+    box-shadow: 0 4px 12px rgba(74, 77, 58, 0.3);
+    transform: translateY(-1px);
+}
+
+.primary-btn:active {
+    transform: translateY(0);
 }
 
 .secondary-btn {
@@ -408,7 +478,8 @@ body {
 }
 
 .secondary-btn:hover {
-    background: rgba(92, 95, 74, 0.05);
+    background: rgba(74, 77, 58, 0.08);
+    border-color: var(--color-forest);
 }
 
 .hidden {
@@ -435,6 +506,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 1px solid rgba(74, 77, 58, 0.15);
 }
 
 .timer-display {
@@ -475,16 +547,17 @@ body {
 }
 
 .timer-label {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--color-stone);
     margin-bottom: var(--space-xs);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
+    font-weight: 600;
 }
 
 .timer-area-select {
     background: rgba(74, 77, 58, 0.08);
-    border: 1px solid rgba(74, 77, 58, 0.2);
+    border: 1.5px solid rgba(74, 77, 58, 0.25);
     border-radius: var(--radius-button);
     padding: var(--space-sm) var(--space-md);
     font-family: var(--font-body);
@@ -499,7 +572,7 @@ body {
 .timer-area-select:focus {
     outline: none;
     border-color: var(--color-olive);
-    box-shadow: 0 0 0 3px rgba(74, 77, 58, 0.1);
+    box-shadow: 0 0 0 3px rgba(74, 77, 58, 0.15);
 }
 
 .session-dots {
@@ -518,7 +591,7 @@ body {
 
 .session-dots .dot.filled {
     background: var(--color-olive);
-    box-shadow: 0 0 4px rgba(92, 95, 74, 0.3);
+    box-shadow: 0 0 4px rgba(74, 77, 58, 0.4);
 }
 
 .timer-controls {
@@ -537,12 +610,13 @@ body {
 }
 
 .wisdom-card {
-    background: rgba(156, 175, 136, 0.1);
+    background: rgba(122, 140, 111, 0.12);
     border-radius: var(--radius-card);
     padding: var(--space-md);
     margin-top: var(--space-lg);
     width: 100%;
     max-width: 400px;
+    border: 1px solid rgba(122, 140, 111, 0.2);
 }
 
 .wisdom-text {
@@ -563,10 +637,11 @@ body {
     padding: 20px;
     margin-bottom: var(--space-md);
     box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(74, 77, 58, 0.12);
 }
 
 .streak-card {
-    background: linear-gradient(135deg, #FFFFFF 0%, rgba(201,169,97,0.05) 100%);
+    background: linear-gradient(135deg, #FFFEF9 0%, rgba(184,147,92,0.08) 100%);
 }
 
 .stat-label {
@@ -611,6 +686,7 @@ body {
     padding: var(--space-md);
     margin-bottom: var(--space-xs);
     box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(74, 77, 58, 0.10);
 }
 
 .mastery-card.warning {
@@ -661,9 +737,9 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(244, 237, 227, 0.98);
+    background: rgba(232, 220, 200, 0.98);
     backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(92, 95, 74, 0.1);
+    border-top: 1px solid rgba(74, 77, 58, 0.15);
     padding: 12px 24px;
     padding-bottom: max(12px, env(safe-area-inset-bottom));
     display: flex;
@@ -716,7 +792,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(44, 44, 44, 0.5);
+    background: rgba(44, 37, 32, 0.6);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -734,58 +810,8 @@ body {
     width: 100%;
     text-align: center;
     animation: slideUp 0.3s ease;
-}
-
-/* Edit Tasks Modal */
-.edit-tasks-modal {
-    max-width: 500px;
-}
-
-.edit-task-group {
-    margin-bottom: var(--space-md);
-}
-
-.edit-task-group label {
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--color-olive);
-    margin-bottom: var(--space-xs);
-}
-
-.task-input {
-    width: 100%;
-    padding: var(--space-sm) var(--space-md);
-    border: 1.5px solid var(--color-stone);
-    border-radius: var(--radius-button);
-    font-family: var(--font-body);
-    font-size: 15px;
-    color: var(--color-warm-black);
-    background: var(--color-white);
-    transition: all 0.2s ease;
-}
-
-.task-input:focus {
-    outline: none;
-    border-color: var(--color-olive);
-    box-shadow: 0 0 0 3px rgba(74, 77, 58, 0.1);
-}
-
-.modal-buttons {
-    display: flex;
-    gap: var(--space-sm);
-    margin-top: var(--space-lg);
-}
-
-.modal-buttons button {
-    flex: 1;
-}
-
-.modal-title {
-    font-family: var(--font-header);
-    font-size: 20px;
-    margin-bottom: var(--space-lg);
-    color: var(--color-warm-black);
+    border: 1px solid rgba(74, 77, 58, 0.15);
+    box-shadow: var(--shadow-elevated);
 }
 
 @keyframes slideUp {
@@ -818,49 +844,72 @@ body {
     color: var(--color-charcoal);
     line-height: 1.6;
     margin-bottom: var(--space-lg);
+    white-space: pre-line;
 }
 
 /* ============================================
-   Responsive
+   Edit Tasks Modal
    ============================================ */
 
-@media (min-width: 768px) {
-    #app {
-        max-width: 600px;
-        margin: 0 auto;
-    }
+.edit-tasks-modal {
+    max-width: 500px;
+    text-align: left;
+}
+
+.edit-task-group {
+    margin-bottom: var(--space-md);
+}
+
+.edit-task-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-olive);
+    margin-bottom: var(--space-xs);
+}
+
+.task-input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    border: 1.5px solid var(--color-stone);
+    border-radius: var(--radius-button);
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--color-warm-black);
+    background: var(--color-white);
+    transition: all 0.2s ease;
+}
+
+.task-input:focus {
+    outline: none;
+    border-color: var(--color-olive);
+    box-shadow: 0 0 0 3px rgba(74, 77, 58, 0.15);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+}
+
+.modal-buttons button {
+    flex: 1;
+}
+
+.modal-title {
+    font-family: var(--font-header);
+    font-size: 20px;
+    margin-bottom: var(--space-lg);
+    color: var(--color-warm-black);
 }
 
 /* ============================================
-   Animations
+   More Menu
    ============================================ */
 
-@keyframes checkGlow {
-    0% {
-        box-shadow: 0 0 0 0 rgba(107, 142, 92, 0.4);
-    }
-    100% {
-        box-shadow: 0 0 0 8px rgba(107, 142, 92, 0);
-    }
-}
-
-.task-checkbox:checked {
-    animation: checkGlow 0.3s ease;
-}
-
-/* ============================================
-   Print Styles
-   ============================================ */
-
-@media print {
-    .bottom-nav {
-        display: none;
-    }
-}
-
-/* More Menu */
 .more-menu {
     max-width: 400px;
+    text-align: left;
 }
 
 .menu-item {
@@ -882,4 +931,25 @@ body {
 .menu-item span {
     font-size: 15px;
     color: var(--color-warm-black);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (min-width: 768px) {
+    #app {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+
+@media print {
+    .bottom-nav {
+        display: none;
+    }
 }
