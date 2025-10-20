@@ -152,6 +152,74 @@ body {
     display: inline-block;
 }
 
+/* Daily Progress Bar */
+.daily-progress-container {
+    background: linear-gradient(135deg, rgba(74, 77, 58, 0.08) 0%, rgba(184, 147, 92, 0.08) 100%);
+    border: 1px solid rgba(74, 77, 58, 0.2);
+    border-radius: var(--radius-card);
+    padding: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-xs);
+}
+
+.progress-label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--color-olive);
+}
+
+.progress-count {
+    font-family: var(--font-header);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-gold);
+}
+
+.quest-progress-bar {
+    background: rgba(44, 37, 32, 0.15);
+    height: 12px;
+    border-radius: var(--radius-small);
+    overflow: hidden;
+    margin-bottom: var(--space-xs);
+}
+
+.quest-progress-fill {
+    background: linear-gradient(90deg, var(--color-olive) 0%, var(--color-gold) 100%);
+    height: 100%;
+    border-radius: var(--radius-small);
+    transition: width 0.5s ease;
+    width: 0%;
+    box-shadow: 0 0 8px rgba(184, 147, 92, 0.3);
+}
+
+.quest-status {
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--color-stone);
+    text-align: center;
+}
+
+.quest-status.winner {
+    color: var(--color-gold);
+    font-weight: 500;
+    animation: shimmer 2s ease infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
 .ledger-subtitle {
     font-size: 13px;
     color: var(--color-stone);
