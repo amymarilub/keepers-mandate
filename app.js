@@ -1,5 +1,5 @@
 // ============================================
-// The Keeper's Mandate - App Logic
+// The Keeper's Mandate - Complete App Logic
 // ============================================
 
 // Data Structure
@@ -50,19 +50,11 @@ function initializeApp() {
     updateSessionDots();
     
     // Setup edit tasks
-    setupEditTasksUI(); // ADD THIS LINE
-
+    setupEditTasksUI();
+    
     // Setup more menu
     setupMoreMenu();
 }
-
-// Timer area selection
-    const areaSelect = document.getElementById('timer-area-select');
-    if (areaSelect) {
-        areaSelect.addEventListener('change', (e) => {
-            appState.timerState.currentArea = e.target.value;
-        });
-    }
 
 // ============================================
 // Event Listeners
@@ -84,6 +76,14 @@ function setupEventListeners() {
     document.getElementById('timer-pause').addEventListener('click', pauseTimer);
     document.getElementById('timer-stop').addEventListener('click', stopTimer);
     
+    // Timer area selection
+    const areaSelect = document.getElementById('timer-area-select');
+    if (areaSelect) {
+        areaSelect.addEventListener('change', (e) => {
+            appState.timerState.currentArea = e.target.value;
+        });
+    }
+    
     // Achievement modal
     document.getElementById('close-achievement').addEventListener('click', closeAchievementModal);
 }
@@ -101,12 +101,6 @@ function handleTaskToggle(e) {
     // Update card appearance
     if (e.target.checked) {
         taskCard.classList.add('completed');
-        
-        // Animate
-        e.target.style.animation = 'checkGlow 0.3s ease';
-        setTimeout(() => {
-            e.target.style.animation = '';
-        }, 300);
     } else {
         taskCard.classList.remove('completed');
     }
@@ -124,7 +118,7 @@ function checkForDayCompletion() {
         if (!appState.history[appState.today]) {
             appState.history[appState.today] = {
                 completed: true,
-                areas: { ...appState.tasks }
+                areas: JSON.parse(JSON.stringify(appState.tasks))
             };
             
             // Update streak
@@ -136,8 +130,8 @@ function checkForDayCompletion() {
             saveToStorage();
         }
         
-        showAchievement('balance', 'Balance Achieved', 
-            'You showed up for every part of your life today.');
+        showAchievement('balance', '⚡ Quest Complete! ⚡', 
+            'You showed up for every part of your life today.\n\nAll five areas balanced.\nBoth houses are proud.\n\n🦡🐍');
     }
 }
 
@@ -146,7 +140,6 @@ function updateStreak() {
     if (dates.length === 0) return;
     
     let currentStreak = 1;
-    const today = new Date(appState.today);
     
     for (let i = dates.length - 1; i > 0; i--) {
         const date = new Date(dates[i]);
@@ -192,7 +185,8 @@ function updateTodayStats() {
             questStatus.textContent = "Begin your daily mandate";
             questStatus.classList.remove('winner');
         } else if (completedCount < 5) {
-            questStatus.textContent = `${5 - completedCount} quest${5 - completedCount > 1 ? 's' : ''} remaining...`;
+            const remaining = 5 - completedCount;
+            questStatus.textContent = `${remaining} quest${remaining > 1 ? 's' : ''} remaining...`;
             questStatus.classList.remove('winner');
         } else {
             questStatus.textContent = "⚡ You've won the day! All areas complete! ⚡";
@@ -226,6 +220,12 @@ function updateAllUI() {
         if (task.completed) {
             card.classList.add('completed');
         }
+        
+        // Update task name
+        const taskName = card.querySelector('.task-name');
+        if (taskName) {
+            taskName.textContent = task.name;
+        }
     });
     
     updateTodayStats();
@@ -239,12 +239,7 @@ function updateStatsView() {
     
     // Calculate week stats
     const weekStats = getWeekStats();
-    const weekPoints = Object.values(weekStats).reduce((sum, count) => {
-        const area = Object.keys(appState.tasks).find(a => 
-            Object.keys(weekStats).indexOf(a) === Object.keys(weekStats).indexOf(Object.keys(weekStats).find(k => weekStats[k] === count))
-        );
-        return sum + (count * 10); // Simplified points calc
-    }, 0);
+    const weekPoints = Object.values(weekStats).reduce((sum, count) => sum + (count * 18), 0);
     
     document.getElementById('stat-week-points').textContent = `${weekPoints} points`;
     
@@ -254,7 +249,10 @@ function updateStatsView() {
     // Update mastery levels for each area
     Object.keys(appState.tasks).forEach(area => {
         const count = weekStats[area] || 0;
-        document.getElementById(`${area}-count`).textContent = count;
+        const countEl = document.getElementById(`${area}-count`);
+        if (countEl) {
+            countEl.textContent = count;
+        }
         
         // Update dots
         const dotsContainer = document.getElementById(`${area}-dots`);
@@ -281,10 +279,13 @@ function updateStatsView() {
     const essenceCount = weekStats.essence || 0;
     const avgCount = Object.values(weekStats).reduce((a, b) => a + b, 0) / 5;
     
-    if (essenceCount < avgCount && essenceCount < 4) {
-        document.getElementById('stats-insight').classList.remove('hidden');
-    } else {
-        document.getElementById('stats-insight').classList.add('hidden');
+    const insightEl = document.getElementById('stats-insight');
+    if (insightEl) {
+        if (essenceCount < avgCount && essenceCount < 4) {
+            insightEl.classList.remove('hidden');
+        } else {
+            insightEl.classList.add('hidden');
+        }
     }
 }
 
@@ -312,105 +313,6 @@ function getWeekStats() {
 }
 
 // ============================================
-// Navigation
-// ============================================
-
-function handleNavigation(e) {
-    const button = e.currentTarget;
-    const targetView = button.dataset.view;
-    
-    if (!targetView) return;
-    
-    // Update active states
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-    });
-    button.classList.add('active');
-    
-    // Show correct view
-    document.querySelectorAll('.view').forEach(view => {
-        view.classList.remove('active');
-    });
-    document.getElementById(`${targetView}-view`).classList.add('active');
-    
-    // Update stats if viewing stats
-    if (targetView === 'stats') {
-        updateStatsView();
-    }
-}
-
-// ============================================
-// Timer Functions
-// ============================================
-
-function startTimer() {
-    if (appState.timerState.isRunning) return;
-    
-    appState.timerState.isRunning = true;
-    document.getElementById('timer-start').classList.add('hidden');
-    document.getElementById('timer-pause').classList.remove('hidden');
-    document.getElementById('timer-stop').classList.remove('hidden');
-    
-    const totalSeconds = 25 * 60;
-    const circumference = 2 * Math.PI * 80; // Updated radius
-    const circle = document.getElementById('progress-circle');
-    circle.style.strokeDasharray = circumference;
-    
-    appState.timerState.interval = setInterval(() => {
-        if (appState.timerState.seconds === 0) {
-            if (appState.timerState.minutes === 0) {
-                // Timer complete
-                completeTimer();
-                return;
-            }
-            appState.timerState.minutes--;
-            appState.timerState.seconds = 59;
-        } else {
-            appState.timerState.seconds--;
-        }
-        
-        updateTimerDisplay();
-        
-        // Update progress ring
-        const elapsed = (25 * 60) - (appState.timerState.minutes * 60 + appState.timerState.seconds);
-        const progress = (elapsed / totalSeconds) * circumference;
-        circle.style.strokeDashoffset = circumference - progress;
-    }, 1000);
-}
-
-function pauseTimer() {
-    appState.timerState.isRunning = false;
-    clearInterval(appState.timerState.interval);
-    
-    document.getElementById('timer-start').classList.remove('hidden');
-    document.getElementById('timer-pause').classList.add('hidden');
-}
-
-function stopTimer() {
-    appState.timerState.isRunning = false;
-    clearInterval(appState.timerState.interval);
-    appState.timerState.minutes = 25;
-    appState.timerState.seconds = 0;
-    
-    updateTimerDisplay();
-    
-    document.getElementById('timer-start').classList.remove('hidden');
-    document.getElementById('timer-pause').classList.add('hidden');
-    document.getElementById('timer-stop').classList.add('hidden');
-    
-    // Reset progress ring
-    const circle = document.getElementById('progress-circle');
-    circle.style.strokeDashoffset = 0;
-}
-
-function completeTimer() {
-    stopTimer();
-    
-    // Increment session
-    appState.sessions = Math.min(appState.sessions + 1, appState.maxSessions);
-    updateSessionDots();
-
-    // ============================================
 // Edit Tasks
 // ============================================
 
@@ -480,30 +382,6 @@ function saveEditedTasks() {
     saveToStorage();
     document.querySelector('.modal').remove();
 }
-    
-    // Show completion message
-    showAchievement('timer', 'Focus Charm Complete!', 
-        `+10 House Points earned!\n\nSessions today: ${appState.sessions}/${appState.maxSessions}`);
-}
-
-function updateTimerDisplay() {
-    const mins = String(appState.timerState.minutes).padStart(2, '0');
-    const secs = String(appState.timerState.seconds).padStart(2, '0');
-    
-    document.getElementById('timer-minutes').textContent = mins;
-    document.getElementById('timer-seconds').textContent = secs;
-}
-
-function updateSessionDots() {
-    const dots = document.querySelectorAll('.session-dots .dot');
-    dots.forEach((dot, index) => {
-        if (index < appState.sessions) {
-            dot.classList.add('filled');
-        } else {
-            dot.classList.remove('filled');
-        }
-    });
-}
 
 // ============================================
 // More Menu
@@ -527,16 +405,16 @@ function showMoreMenu() {
                 <span>ℹ️ About The Keeper's Mandate</span>
             </div>
             
-            <div class="menu-item" onclick="resetData()">
-                <span>🔄 Reset All Data</span>
+            <div class="menu-item" onclick="showHousesInfo()">
+                <span>🦡🐍 House Philosophy</span>
             </div>
             
             <div class="menu-item" onclick="exportData()">
                 <span>💾 Export Data</span>
             </div>
             
-            <div class="menu-item" onclick="showHousesInfo()">
-                <span>🦡🐍 House Philosophy</span>
+            <div class="menu-item" onclick="resetData()">
+                <span>🔄 Reset All Data</span>
             </div>
             
             <button class="primary-btn" onclick="this.closest('.modal').remove()" style="margin-top: 20px;">Close</button>
@@ -594,7 +472,7 @@ function showHousesInfo() {
             </div>
             
             <p style="line-height: 1.6; color: var(--color-stone); font-size: 13px; font-style: italic;">
-                Together: Strategic loyalty. Sustainable ambition. The long game.
+                Together: Strategic loyalty. Sustainable ambition. The long game. "Always."
             </p>
             
             <button class="primary-btn" onclick="this.closest('.modal').remove()" style="margin-top: 20px;">Close</button>
@@ -622,26 +500,148 @@ function exportData() {
 }
 
 // ============================================
+// Navigation
+// ============================================
+
+function handleNavigation(e) {
+    const button = e.currentTarget;
+    const targetView = button.dataset.view;
+    
+    if (!targetView) return;
+    
+    // Update active states
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    button.classList.add('active');
+    
+    // Show correct view
+    document.querySelectorAll('.view').forEach(view => {
+        view.classList.remove('active');
+    });
+    document.getElementById(`${targetView}-view`).classList.add('active');
+    
+    // Update stats if viewing stats
+    if (targetView === 'stats') {
+        updateStatsView();
+    }
+}
+
+// ============================================
+// Timer Functions
+// ============================================
+
+function startTimer() {
+    if (appState.timerState.isRunning) return;
+    
+    appState.timerState.isRunning = true;
+    document.getElementById('timer-start').classList.add('hidden');
+    document.getElementById('timer-pause').classList.remove('hidden');
+    document.getElementById('timer-stop').classList.remove('hidden');
+    
+    const totalSeconds = 25 * 60;
+    const circumference = 2 * Math.PI * 80;
+    const circle = document.getElementById('progress-circle');
+    circle.style.strokeDasharray = circumference;
+    
+    appState.timerState.interval = setInterval(() => {
+        if (appState.timerState.seconds === 0) {
+            if (appState.timerState.minutes === 0) {
+                completeTimer();
+                return;
+            }
+            appState.timerState.minutes--;
+            appState.timerState.seconds = 59;
+        } else {
+            appState.timerState.seconds--;
+        }
+        
+        updateTimerDisplay();
+        
+        // Update progress ring
+        const elapsed = (25 * 60) - (appState.timerState.minutes * 60 + appState.timerState.seconds);
+        const progress = (elapsed / totalSeconds) * circumference;
+        circle.style.strokeDashoffset = circumference - progress;
+    }, 1000);
+}
+
+function pauseTimer() {
+    appState.timerState.isRunning = false;
+    clearInterval(appState.timerState.interval);
+    
+    document.getElementById('timer-start').classList.remove('hidden');
+    document.getElementById('timer-pause').classList.add('hidden');
+}
+
+function stopTimer() {
+    appState.timerState.isRunning = false;
+    clearInterval(appState.timerState.interval);
+    appState.timerState.minutes = 25;
+    appState.timerState.seconds = 0;
+    
+    updateTimerDisplay();
+    
+    document.getElementById('timer-start').classList.remove('hidden');
+    document.getElementById('timer-pause').classList.add('hidden');
+    document.getElementById('timer-stop').classList.add('hidden');
+    
+    // Reset progress ring
+    const circle = document.getElementById('progress-circle');
+    circle.style.strokeDashoffset = 0;
+}
+
+function completeTimer() {
+    stopTimer();
+    
+    // Increment session
+    appState.sessions = Math.min(appState.sessions + 1, appState.maxSessions);
+    updateSessionDots();
+    
+    // Show completion message
+    showAchievement('timer', '⚡ Focus Charm Complete! ⚡', 
+        `+10 House Points earned!\n\nSessions today: ${appState.sessions}/${appState.maxSessions}\n\n"Consistency is the magic"`);
+}
+
+function updateTimerDisplay() {
+    const mins = String(appState.timerState.minutes).padStart(2, '0');
+    const secs = String(appState.timerState.seconds).padStart(2, '0');
+    
+    document.getElementById('timer-minutes').textContent = mins;
+    document.getElementById('timer-seconds').textContent = secs;
+}
+
+function updateSessionDots() {
+    const dots = document.querySelectorAll('.session-dots .dot');
+    dots.forEach((dot, index) => {
+        if (index < appState.sessions) {
+            dot.classList.add('filled');
+        } else {
+            dot.classList.remove('filled');
+        }
+    });
+}
+
+// ============================================
 // Achievements
 // ============================================
 
 function checkAchievements() {
     // Check for "Always" achievement (30 days)
     if (appState.streak === 30) {
-        showAchievement('always', 'ALWAYS', 
+        showAchievement('always', '🖤 ALWAYS 🖤', 
             `30 days of unwavering loyalty to yourself and your goals.\n\n"After all this time?"\n"Always."\n\nThis is the magic of consistency.\n\nBoth houses honor your dedication.`);
     }
     
     // Check for 90 days
     if (appState.streak === 90) {
-        showAchievement('unbreakable', 'THE UNBREAKABLE VOW', 
-            `You've kept your promise to yourself for 90 consecutive days.\n\nThis is the magic few understand.\nThe quiet, relentless, unseen work.`);
+        showAchievement('unbreakable', '🖤 THE UNBREAKABLE VOW 🖤', 
+            `You've kept your promise to yourself for 90 consecutive days.\n\nThis is the magic few understand.\nThe quiet, relentless, unseen work.\n\nThis is the way.`);
     }
     
     // Check for 7 days
     if (appState.streak === 7) {
-        showAchievement('week', 'One Week Strong', 
-            `7 days of showing up. This is how habits are forged.`);
+        showAchievement('week', '🔥 One Week Strong 🔥', 
+            `7 days of showing up. This is how habits are forged.\n\nBoth houses are proud.`);
     }
 }
 
@@ -653,7 +653,7 @@ function showAchievement(type, title, text) {
     
     // Set icon based on type
     const icons = {
-        balance: '🦡🐍',
+        balance: '✨',
         always: '🖤',
         unbreakable: '🖤',
         week: '🔥',
@@ -703,15 +703,5 @@ function checkForNewDay() {
     }
 }
 
-// ============================================
-// Utility Functions
-// ============================================
-
-function getDayOfWeek() {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    return days[new Date().getDay()];
-}
-
 // Check for new day every minute
 setInterval(checkForNewDay, 60000);
-
