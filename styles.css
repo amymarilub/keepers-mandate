@@ -4,22 +4,22 @@
 
 /* CSS Variables */
 :root {
-    /* Colors */
-    --color-gold: #C9A961;
-    --color-olive: #5C5F4A;
-    --color-forest: #3E4A3D;
-    --color-sage: #9CAF88;
-    --color-success: #6B8E5C;
-    --color-warning: #D4A574;
-    --color-alert: #A85F4F;
+    /* Colors - Moodier Hufflepuff */
+    --color-gold: #B8935C;
+    --color-olive: #4A4D3A;
+    --color-forest: #2E3428;
+    --color-sage: #7A8C6F;
+    --color-success: #5D7A50;
+    --color-warning: #C29456;
+    --color-alert: #9A5847;
     
-    /* Neutrals */
-    --color-parchment: #F4EDE3;
-    --color-canvas: #E8DCC8;
-    --color-stone: #ADA398;
-    --color-charcoal: #4A4A4A;
-    --color-warm-black: #2C2C2C;
-    --color-white: #FFFFFF;
+    /* Neutrals - Darker, Richer */
+    --color-parchment: #E8DCC8;
+    --color-canvas: #D4C4A8;
+    --color-stone: #9A8A78;
+    --color-charcoal: #3A3A3A;
+    --color-warm-black: #2C2520;
+    --color-white: #FFFEF9;
     
     /* Typography */
     --font-header: 'Crimson Text', serif;
@@ -40,10 +40,10 @@
     --radius-button: 8px;
     --radius-small: 6px;
     
-    /* Shadows */
-    --shadow-soft: 0 2px 8px rgba(44, 44, 44, 0.06);
-    --shadow-medium: 0 4px 12px rgba(44, 44, 44, 0.08);
-    --shadow-elevated: 0 6px 16px rgba(44, 44, 44, 0.12);
+    /* Shadows - Deeper */
+    --shadow-soft: 0 2px 12px rgba(44, 37, 32, 0.12);
+    --shadow-medium: 0 4px 16px rgba(44, 37, 32, 0.16);
+    --shadow-elevated: 0 6px 24px rgba(44, 37, 32, 0.20);
 }
 
 /* ============================================
