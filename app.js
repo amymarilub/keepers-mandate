@@ -48,6 +48,9 @@ function initializeApp() {
     // Initialize timer display
     updateTimerDisplay();
     updateSessionDots();
+    
+    // Setup edit tasks
+    setupEditTasksUI(); // ADD THIS LINE
 }
 
 // ============================================
@@ -371,6 +374,77 @@ function completeTimer() {
     // Increment session
     appState.sessions = Math.min(appState.sessions + 1, appState.maxSessions);
     updateSessionDots();
+
+    // ============================================
+// Edit Tasks
+// ============================================
+
+function setupEditTasksUI() {
+    const editBtn = document.getElementById('edit-tasks-btn');
+    if (editBtn) {
+        editBtn.addEventListener('click', showEditTasksModal);
+    }
+}
+
+function showEditTasksModal() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content edit-tasks-modal">
+            <h2 class="modal-title">Edit Today's Tasks</h2>
+            
+            <div class="edit-task-group">
+                <label>📜 CRAFT</label>
+                <input type="text" id="edit-craft" value="${appState.tasks.craft.name}" class="task-input">
+            </div>
+            
+            <div class="edit-task-group">
+                <label>⚡ VITALITY</label>
+                <input type="text" id="edit-vitality" value="${appState.tasks.vitality.name}" class="task-input">
+            </div>
+            
+            <div class="edit-task-group">
+                <label>🏰 DOMAIN</label>
+                <input type="text" id="edit-domain" value="${appState.tasks.domain.name}" class="task-input">
+            </div>
+            
+            <div class="edit-task-group">
+                <label>💛 KIN</label>
+                <input type="text" id="edit-kin" value="${appState.tasks.kin.name}" class="task-input">
+            </div>
+            
+            <div class="edit-task-group">
+                <label>✨ ESSENCE</label>
+                <input type="text" id="edit-essence" value="${appState.tasks.essence.name}" class="task-input">
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="secondary-btn" onclick="this.closest('.modal').remove()">Cancel</button>
+                <button class="primary-btn" onclick="saveEditedTasks()">Save Changes</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function saveEditedTasks() {
+    appState.tasks.craft.name = document.getElementById('edit-craft').value;
+    appState.tasks.vitality.name = document.getElementById('edit-vitality').value;
+    appState.tasks.domain.name = document.getElementById('edit-domain').value;
+    appState.tasks.kin.name = document.getElementById('edit-kin').value;
+    appState.tasks.essence.name = document.getElementById('edit-essence').value;
+    
+    // Update UI
+    document.querySelector('[data-area="craft"] .task-name').textContent = appState.tasks.craft.name;
+    document.querySelector('[data-area="vitality"] .task-name').textContent = appState.tasks.vitality.name;
+    document.querySelector('[data-area="domain"] .task-name').textContent = appState.tasks.domain.name;
+    document.querySelector('[data-area="kin"] .task-name').textContent = appState.tasks.kin.name;
+    document.querySelector('[data-area="essence"] .task-name').textContent = appState.tasks.essence.name;
+    
+    saveToStorage();
+    document.querySelector('.modal').remove();
+}
     
     // Show completion message
     showAchievement('timer', 'Focus Charm Complete!', 
