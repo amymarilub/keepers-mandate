@@ -482,17 +482,24 @@ body {
     letter-spacing: 0.5px;
 }
 
-.timer-area-badge {
-    background: rgba(92, 95, 74, 0.08);
-    border: 1px solid rgba(92, 95, 74, 0.15);
+.timer-area-select {
+    background: rgba(74, 77, 58, 0.08);
+    border: 1px solid rgba(74, 77, 58, 0.2);
     border-radius: var(--radius-button);
     padding: var(--space-sm) var(--space-md);
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
+    font-family: var(--font-body);
     font-size: 14px;
     font-weight: 500;
     color: var(--color-olive);
+    cursor: pointer;
+    min-width: 180px;
+    transition: all 0.2s ease;
+}
+
+.timer-area-select:focus {
+    outline: none;
+    border-color: var(--color-olive);
+    box-shadow: 0 0 0 3px rgba(74, 77, 58, 0.1);
 }
 
 .session-dots {
