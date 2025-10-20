@@ -525,6 +525,11 @@ function handleNavigation(e) {
     if (targetView === 'stats') {
         updateStatsView();
     }
+    
+    // Update week view if viewing week
+    if (targetView === 'week') {
+        updateWeekView();
+    }
 }
 
 // ============================================
@@ -672,6 +677,111 @@ function closeAchievementModal() {
 }
 
 // ============================================
+// Week View Functions
+// ============================================
+
+function updateWeekView() {
+    const weekStart = getWeekStartDate();
+    const areas = ['craft', 'vitality', 'domain', 'kin', 'essence'];
+    
+    areas.forEach(area => {
+        const row = document.querySelector(`.week-row[data-area="${area}"]`);
+        if (!row) return;
+        
+        const dayCells = row.querySelectorAll('.day-cell');
+        
+        dayCells.forEach((cell, dayIndex) => {
+            const date = new Date(weekStart);
+            date.setDate(date.getDate() + dayIndex);
+            const dateStr = date.toISOString().split('T')[0];
+            
+            // Check if today
+            const today = new Date().toISOString().split('T')[0];
+            if (dateStr === today) {
+                cell.classList.add('today');
+            } else {
+                cell.classList.remove('today');
+            }
+            
+            // Check if completed
+            const dayData = appState.history[dateStr];
+            if (dayData && dayData.areas && dayData.areas[area] && dayData.areas[area].completed) {
+                cell.classList.add('filled');
+            } else {
+                cell.classList.remove('filled');
+            }
+        });
+    });
+    
+    updateWeekInsights();
+}
+
+function getWeekStartDate() {
+    const today = new Date();
+    const day = today.getDay();
+    const diff = day === 0 ? -6 : 1 - day; // Monday is start of week
+    const monday = new Date(today);
+    monday.setDate(today.getDate() + diff);
+    monday.setHours(0, 0, 0, 0);
+    return monday;
+}
+
+function updateWeekInsights() {
+    const weekStart = getWeekStartDate();
+    const areas = ['craft', 'vitality', 'domain', 'kin', 'essence'];
+    const areaCount = {};
+    
+    areas.forEach(area => {
+        areaCount[area] = 0;
+        
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(weekStart);
+            date.setDate(date.getDate() + i);
+            const dateStr = date.toISOString().split('T')[0];
+            
+            const dayData = appState.history[dateStr];
+            if (dayData && dayData.areas && dayData.areas[area] && dayData.areas[area].completed) {
+                areaCount[area]++;
+            }
+        }
+    });
+    
+    const insightEl = document.getElementById('week-insight');
+    if (!insightEl) return;
+    
+    // Find strongest and weakest
+    const sorted = Object.entries(areaCount).sort((a, b) => b[1] - a[1]);
+    const strongest = sorted[0];
+    const weakest = sorted[sorted.length - 1];
+    
+    const total = Object.values(areaCount).reduce((sum, count) => sum + count, 0);
+    
+    if (total === 0) {
+        insightEl.textContent = "Complete your daily mandate to see patterns emerge...";
+    } else if (total === 35) {
+        insightEl.textContent = "🦡 Perfect week! Every area, every day. Both houses are proud. 🐍";
+    } else {
+        const areaNames = {
+            craft: 'Craft',
+            vitality: 'Vitality',
+            domain: 'Domain',
+            kin: 'Kin',
+            essence: 'Essence'
+        };
+        
+        let message = `${areaNames[strongest[0]]} is your strongest (${strongest[1]}/7)`;
+        
+        if (weakest[1] < 3) {
+            message += `. 🌿 ${areaNames[weakest[0]]} needs attention (${weakest[1]}/7).`;
+        } else {
+            message += `. Good balance this week!`;
+        }
+        
+        insightEl.textContent = message;
+    }
+}
+
+// ============================================
 // Data Persistence
 // ============================================
 
@@ -702,6 +812,9 @@ function checkForNewDay() {
         updateAllUI();
     }
 }
+
+// Check for new day every minute
+setInterval(checkForNewDay, 60000);
 
 // Check for new day every minute
 setInterval(checkForNewDay, 60000);
