@@ -729,6 +729,58 @@ body {
     animation: slideUp 0.3s ease;
 }
 
+/* Edit Tasks Modal */
+.edit-tasks-modal {
+    max-width: 500px;
+}
+
+.edit-task-group {
+    margin-bottom: var(--space-md);
+}
+
+.edit-task-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-olive);
+    margin-bottom: var(--space-xs);
+}
+
+.task-input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    border: 1.5px solid var(--color-stone);
+    border-radius: var(--radius-button);
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--color-warm-black);
+    background: var(--color-white);
+    transition: all 0.2s ease;
+}
+
+.task-input:focus {
+    outline: none;
+    border-color: var(--color-olive);
+    box-shadow: 0 0 0 3px rgba(74, 77, 58, 0.1);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+}
+
+.modal-buttons button {
+    flex: 1;
+}
+
+.modal-title {
+    font-family: var(--font-header);
+    font-size: 20px;
+    margin-bottom: var(--space-lg);
+    color: var(--color-warm-black);
+}
+
 @keyframes slideUp {
     from {
         opacity: 0;
